@@ -3,6 +3,7 @@ import Navbar from './Navbar'
 import About from './About'
 import Experience from './Experience'
 import './App.css'
+import StarWars from './Starwars'
 
 
 const dummyDataWork = [
@@ -56,6 +57,8 @@ function App() {
         <About/>
         <Experience workData={dummyDataWork} educationData={dummyDataEducation}/>
       </div>
+            <StarWars width={800} height={600} />
+
     </>
   )
 }
