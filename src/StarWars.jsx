@@ -265,7 +265,7 @@ const StarWars = ({
 
     // Spawn ships from edges
     const spawnShip = async (type) => {
-      const edge = Math.floor(Math.random() * 4);
+      const edge = Math.floor(Math.random() * 3);
       let position;
       let baseVelocity;
       
@@ -552,7 +552,7 @@ const StarWars = ({
           ships.forEach(otherShip => {
             if (otherShip.userData.type !== ship.userData.type && otherShip.userData.health > 0) {
               const distance = ship.position.distanceTo(otherShip.position);
-              if (distance < minDistance && distance < 25) {
+              if (distance < minDistance && distance < 35) {
                 minDistance = distance;
                 nearestEnemy = otherShip;
               }
@@ -590,19 +590,67 @@ const StarWars = ({
           return;
         }
         
-        // Check for hits - instant destruction
+        // Check for hits - with 50/50 survival chance
         ships.forEach((ship, shipIndex) => {
           if (ship !== laser.userData.shooter && ship.userData.health > 0) {
             const distance = laser.position.distanceTo(ship.position);
             if (distance < 2.5) {
-              // Create explosion
-              createExplosion(ship.position);
-              
-              // Remove ship and laser
-              scene.remove(ship);
-              ships.splice(shipIndex, 1);
+              // Remove the laser first
               scene.remove(laser);
               lasersRef.current.splice(index, 1);
+              
+              // 50% chance for the ship to survive the hit
+              if (Math.random() < 0.5) {
+                // Ship survives - create small damage effect
+                const damageExplosion = new THREE.Group();
+                for (let i = 0; i < 3; i++) {
+                  const particleGeometry = new THREE.SphereGeometry(0.15, 4, 4);
+                  const particleMaterial = new THREE.MeshBasicMaterial({ 
+                    color: new THREE.Color().setHSL(0.1, 1, 0.6)
+                  });
+                  const particle = new THREE.Mesh(particleGeometry, particleMaterial);
+                  
+                  particle.position.copy(ship.position);
+                  particle.userData = {
+                    velocity: new THREE.Vector3(
+                      (Math.random() - 0.5) * 0.2,
+                      (Math.random() - 0.5) * 0.2,
+                      (Math.random() - 0.5) * 0.2
+                    ),
+                    life: 15 + Math.random() * 10
+                  };
+                  
+                  damageExplosion.add(particle);
+                }
+                
+                scene.add(damageExplosion);
+                
+                // Animate damage effect
+                const animateDamage = () => {
+                  let aliveParticles = 0;
+                  damageExplosion.children.forEach(particle => {
+                    if (particle.userData.life > 0) {
+                      particle.position.add(particle.userData.velocity);
+                      particle.userData.life--;
+                      particle.material.opacity = particle.userData.life / 15;
+                      aliveParticles++;
+                    }
+                  });
+                  
+                  if (aliveParticles > 0) {
+                    requestAnimationFrame(animateDamage);
+                  } else {
+                    scene.remove(damageExplosion);
+                  }
+                };
+                
+                animateDamage();
+              } else {
+                // Ship is destroyed
+                createExplosion(ship.position);
+                scene.remove(ship);
+                ships.splice(shipIndex, 1);
+              }
             }
           }
         });
