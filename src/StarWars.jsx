@@ -26,6 +26,7 @@ const StarWars = ({
     // Scene setup
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x000011);
+    // scene.background = new THREE.Color(0x14151A);
     sceneRef.current = scene;
 
     // Camera setup - aerial view
@@ -54,23 +55,23 @@ const StarWars = ({
     scene.add(dirLightHelper);
     // --- End lighting setup ---
 
-    
+
     // Raycaster for mouse interactions
     const raycaster = new THREE.Raycaster();
     raycasterRef.current = raycaster;
 
     // Add stars in background
-    const starGeometry = new THREE.SphereGeometry(0.2, 4, 4);
-    const starMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    for (let i = 0; i < 300; i++) {
-      const star = new THREE.Mesh(starGeometry, starMaterial);
-      star.position.set(
-        (Math.random() - 0.5) * 300,
-        (Math.random() - 0.5) * 300,
-        (Math.random() - 0.5) * 300
-      );
-      scene.add(star);
-    }
+    // const starGeometry = new THREE.SphereGeometry(0.2, 4, 4);
+    // const starMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    // for (let i = 0; i < 300; i++) {
+    //   const star = new THREE.Mesh(starGeometry, starMaterial);
+    //   star.position.set(
+    //     (Math.random() - 0.5) * 300,
+    //     (Math.random() - 0.5) * 300,
+    //     (Math.random() - 0.5) * 300
+    //   );
+    //   scene.add(star);
+    // }
 
     const ships = [];
     shipsRef.current = ships;
@@ -104,7 +105,7 @@ const StarWars = ({
             
             // Scale to appropriate size
             const maxDimension = Math.max(size.x, size.y, size.z);
-            const scale = 10 / maxDimension; // Adjust this value as needed
+            const scale = 5 / maxDimension; // Adjust this value as needed
             model.scale.setScalar(scale);
             
             console.log('Applied scale:', scale);
