@@ -40,6 +40,21 @@ const StarWars = ({
     mountRef.current.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
+    // --- Lighting setup ---
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+
+    const dirLight = new THREE.DirectionalLight(0xffffff, 2);
+    dirLight.position.set(0, 50, 50); // above & in front of ships
+    dirLight.castShadow = true;
+    scene.add(dirLight);
+
+    // Optional helper so you can see where the light is
+    const dirLightHelper = new THREE.DirectionalLightHelper(dirLight, 5);
+    scene.add(dirLightHelper);
+    // --- End lighting setup ---
+
+    
     // Raycaster for mouse interactions
     const raycaster = new THREE.Raycaster();
     raycasterRef.current = raycaster;
