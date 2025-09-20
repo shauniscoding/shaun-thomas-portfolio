@@ -12,3 +12,30 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+
+/* Thin scrollbar */
+::-webkit-scrollbar {
+  width: 5px;              /* thinner bar */
+}
+
+/* Thumb (draggable bar) */
+::-webkit-scrollbar-thumb {
+  background: #8db5ed;      /* Tailwind gray-600 */
+  border-radius: 9999px;
+}
+
+/* Hover effect */
+::-webkit-scrollbar-thumb:hover {
+  background: #5e8dde;      /* Tailwind gray-400 */
+}
+
+/* Track (background space) */
+::-webkit-scrollbar-track {
+  background: transparent;  /* no casing */
+  margin-top: 3px;         /* space at top */
+  margin-bottom: 3px;      /* space at bottom */
+  margin-right: 20px;
+}
+
+
