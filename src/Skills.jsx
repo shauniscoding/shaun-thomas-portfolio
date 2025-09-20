@@ -55,13 +55,13 @@ const Skills = ({skillsData}) => {
       </div>
 
         {/* Skills section */}
-        <div className="relative w-full max-w-3xl h-[400px] border-2 border-white grid [grid-template-columns:repeat(auto-fit,minmax(10rem,1fr))] gap-4 justify-items-center content-start rounded-lg p-4 overflow-y-scroll">
+        <div className="relative w-full max-w-3xl h-[400px] border-2 border-white grid [grid-template-columns:repeat(auto-fit,minmax(10rem,1fr))] gap-4 justify-items-center content-start rounded-lg py-8 px-4 overflow-y-scroll">
         {selectedData.map((skill, index) => {
             const Icon = iconMap[skill.icon];
             return (
             <div
                 key={index}
-                className="group flex flex-col items-center justify-center w-40 h-40 border border-white rounded-xl transition-all duration-300 cursor-pointer hover:border-[var(--hover-color)]"
+                className="group flex flex-col items-center justify-center w-40 h-39 border border-white rounded-xl transition-all duration-300 cursor-pointer hover:border-[var(--hover-color)]"
                 style={{ "--hover-color": skill.color }}
             >
                 <Icon
@@ -75,11 +75,6 @@ const Skills = ({skillsData}) => {
             );
         })}
         </div>
-
-
-
-
-
     </div>
   );
 };
