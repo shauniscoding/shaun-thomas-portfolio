@@ -1,7 +1,16 @@
 import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 
-const StarWars = ({ width = 800, height = 600 }) => {
+// Note: You'll need to install and import GLTFLoader separately in a real project
+// For now, we'll provide a fallback to the makeshift ships
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+
+const StarWars = ({ 
+  width = 800, 
+  height = 600, 
+  xwingModelPath = '/models/xwing.glb',
+  tieFighterModelPath = '/models/tiefighter.glb'
+}) => {
   const mountRef = useRef(null);
   const sceneRef = useRef(null);
   const rendererRef = useRef(null);
@@ -51,39 +60,148 @@ const StarWars = ({ width = 800, height = 600 }) => {
     const ships = [];
     shipsRef.current = ships;
 
-    // X-Wing factory
+    // Model loading function
+    const loadGLBModel = (path) => {
+      return new Promise((resolve, reject) => {
+        if (!path) {
+          resolve(null);
+          return;
+        }
+        
+        console.log('Attempting to load model from:', path);
+        
+        const loader = new GLTFLoader();
+        loader.load(
+          path,
+          (gltf) => {
+            console.log('Model loaded successfully:', path);
+            const model = gltf.scene;
+            
+            // Normalize the model
+            const box = new THREE.Box3().setFromObject(model);
+            const center = box.getCenter(new THREE.Vector3());
+            const size = box.getSize(new THREE.Vector3());
+            
+            console.log('Model size:', size);
+            
+            // Center the model
+            model.position.sub(center);
+            
+            // Scale to appropriate size
+            const maxDimension = Math.max(size.x, size.y, size.z);
+            const scale = 10 / maxDimension; // Adjust this value as needed
+            model.scale.setScalar(scale);
+            
+            console.log('Applied scale:', scale);
+            
+            // Ensure materials are set up properly
+            model.traverse((child) => {
+              if (child.isMesh) {
+                // Enable shadows if needed
+                child.castShadow = true;
+                child.receiveShadow = true;
+                
+                // Ensure materials work with basic lighting
+                if (child.material) {
+                  if (child.material.map) {
+                    child.material.map.flipY = false;
+                  }
+                }
+              }
+            });
+            
+            resolve(model);
+          },
+          (progress) => {
+            // Optional: Handle loading progress
+            console.log('Loading progress:', (progress.loaded / progress.total * 100).toFixed(2) + '%');
+          },
+          (error) => {
+            console.error('Failed to load GLB model:', path, error);
+            resolve(null);
+          }
+        );
+      });
+    };
+
+    // Load models (will be null if no path provided)
+    let xwingModel = null;
+    let tieFighterModel = null;
+    
+    const initializeModels = async () => {
+      console.log('Starting model initialization...');
+      if (xwingModelPath) {
+        console.log('Loading X-wing model...');
+        xwingModel = await loadGLBModel(xwingModelPath);
+        if (xwingModel) {
+          console.log('X-wing model loaded successfully');
+        } else {
+          console.log('X-wing model failed to load, using fallback');
+        }
+      } else {
+        console.log('No X-wing model path provided, using fallback');
+      }
+      
+      if (tieFighterModelPath) {
+        console.log('Loading TIE Fighter model...');
+        tieFighterModel = await loadGLBModel(tieFighterModelPath);
+        if (tieFighterModel) {
+          console.log('TIE Fighter model loaded successfully');
+        } else {
+          console.log('TIE Fighter model failed to load, using fallback');
+        }
+      } else {
+        console.log('No TIE Fighter model path provided, using fallback');
+      }
+      
+      console.log('Model initialization complete. X-wing model:', !!xwingModel, 'TIE Fighter model:', !!tieFighterModel);
+    };
+
+    // X-Wing factory (with model fallback)
     const createXWing = (position) => {
-      const group = new THREE.Group();
+      let group;
       
-      // Main body
-      const bodyGeometry = new THREE.BoxGeometry(0.8, 0.4, 3);
-      const bodyMaterial = new THREE.MeshBasicMaterial({ color: 0xcccccc });
-      const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
-      group.add(body);
+      console.log('Creating X-wing. Model available:', !!xwingModel);
       
-      // Wings in X formation
-      const wingGeometry = new THREE.BoxGeometry(0.15, 0.15, 2.5);
-      const wingMaterial = new THREE.MeshBasicMaterial({ color: 0xaaaaaa });
-      
-      const wing1 = new THREE.Mesh(wingGeometry, wingMaterial);
-      wing1.position.set(1.2, 0, 0);
-      wing1.rotation.y = Math.PI / 6;
-      group.add(wing1);
-      
-      const wing2 = new THREE.Mesh(wingGeometry, wingMaterial);
-      wing2.position.set(-1.2, 0, 0);
-      wing2.rotation.y = -Math.PI / 6;
-      group.add(wing2);
-      
-      const wing3 = new THREE.Mesh(wingGeometry, wingMaterial);
-      wing3.position.set(0, 1.2, 0);
-      wing3.rotation.x = Math.PI / 6;
-      group.add(wing3);
-      
-      const wing4 = new THREE.Mesh(wingGeometry, wingMaterial);
-      wing4.position.set(0, -1.2, 0);
-      wing4.rotation.x = -Math.PI / 6;
-      group.add(wing4);
+      if (xwingModel) {
+        // Use loaded model
+        console.log('Using 3D model for X-wing');
+        group = xwingModel.clone();
+      } else {
+        // Fallback to makeshift model
+        console.log('Using fallback geometry for X-wing');
+        group = new THREE.Group();
+        
+        // Main body
+        const bodyGeometry = new THREE.BoxGeometry(0.8, 0.4, 3);
+        const bodyMaterial = new THREE.MeshBasicMaterial({ color: 0xcccccc });
+        const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+        group.add(body);
+        
+        // Wings in X formation
+        const wingGeometry = new THREE.BoxGeometry(0.15, 0.15, 2.5);
+        const wingMaterial = new THREE.MeshBasicMaterial({ color: 0xaaaaaa });
+        
+        const wing1 = new THREE.Mesh(wingGeometry, wingMaterial);
+        wing1.position.set(1.2, 0, 0);
+        wing1.rotation.y = Math.PI / 6;
+        group.add(wing1);
+        
+        const wing2 = new THREE.Mesh(wingGeometry, wingMaterial);
+        wing2.position.set(-1.2, 0, 0);
+        wing2.rotation.y = -Math.PI / 6;
+        group.add(wing2);
+        
+        const wing3 = new THREE.Mesh(wingGeometry, wingMaterial);
+        wing3.position.set(0, 1.2, 0);
+        wing3.rotation.x = Math.PI / 6;
+        group.add(wing3);
+        
+        const wing4 = new THREE.Mesh(wingGeometry, wingMaterial);
+        wing4.position.set(0, -1.2, 0);
+        wing4.rotation.x = -Math.PI / 6;
+        group.add(wing4);
+      }
       
       group.position.copy(position);
       group.userData = { 
@@ -101,27 +219,35 @@ const StarWars = ({ width = 800, height = 600 }) => {
       return group;
     };
 
-    // TIE Fighter factory
+    // TIE Fighter factory (with model fallback)
     const createTieFighter = (position) => {
-      const group = new THREE.Group();
+      let group;
       
-      // Cockpit
-      const cockpitGeometry = new THREE.SphereGeometry(0.6, 8, 8);
-      const cockpitMaterial = new THREE.MeshBasicMaterial({ color: 0x333333 });
-      const cockpit = new THREE.Mesh(cockpitGeometry, cockpitMaterial);
-      group.add(cockpit);
-      
-      // Solar panels
-      const panelGeometry = new THREE.BoxGeometry(0.1, 3, 3);
-      const panelMaterial = new THREE.MeshBasicMaterial({ color: 0x111111 });
-      
-      const leftPanel = new THREE.Mesh(panelGeometry, panelMaterial);
-      leftPanel.position.set(-1.8, 0, 0);
-      group.add(leftPanel);
-      
-      const rightPanel = new THREE.Mesh(panelGeometry, panelMaterial);
-      rightPanel.position.set(1.8, 0, 0);
-      group.add(rightPanel);
+      if (tieFighterModel) {
+        // Use loaded model
+        group = tieFighterModel.clone();
+      } else {
+        // Fallback to makeshift model
+        group = new THREE.Group();
+        
+        // Cockpit
+        const cockpitGeometry = new THREE.SphereGeometry(0.6, 8, 8);
+        const cockpitMaterial = new THREE.MeshBasicMaterial({ color: 0x333333 });
+        const cockpit = new THREE.Mesh(cockpitGeometry, cockpitMaterial);
+        group.add(cockpit);
+        
+        // Solar panels
+        const panelGeometry = new THREE.BoxGeometry(0.1, 3, 3);
+        const panelMaterial = new THREE.MeshBasicMaterial({ color: 0x111111 });
+        
+        const leftPanel = new THREE.Mesh(panelGeometry, panelMaterial);
+        leftPanel.position.set(-1.8, 0, 0);
+        group.add(leftPanel);
+        
+        const rightPanel = new THREE.Mesh(panelGeometry, panelMaterial);
+        rightPanel.position.set(1.8, 0, 0);
+        group.add(rightPanel);
+      }
       
       group.position.copy(position);
       group.userData = { 
@@ -140,7 +266,7 @@ const StarWars = ({ width = 800, height = 600 }) => {
     };
 
     // Spawn ships from edges
-    const spawnShip = (type) => {
+    const spawnShip = async (type) => {
       const edge = Math.floor(Math.random() * 4);
       let position;
       let baseVelocity;
@@ -180,16 +306,23 @@ const StarWars = ({ width = 800, height = 600 }) => {
       scene.add(ship);
     };
 
-    // Initial ships - start with balanced numbers
-    for (let i = 0; i < 2; i++) {
-      spawnShip('xwing');
-      spawnShip('tie');
-    }
+    // Initialize models and then start with initial ships
+    const initializeScene = async () => {
+      await initializeModels();
+      
+      // Initial ships - start with balanced numbers
+      for (let i = 0; i < 2; i++) {
+        await spawnShip('xwing');
+        await spawnShip('tie');
+      }
+    };
+
+    initializeScene();
 
     // Laser creation
     const createLaser = (position, direction, color, shooter) => {
       const laserGeometry = new THREE.CylinderGeometry(0.08, 0.08, 1.5);
-      const laserMaterial = new THREE.MeshBasicMaterial({ color, emissive: color, emissiveIntensity: 0.3 });
+      const laserMaterial = new THREE.MeshBasicMaterial({ color });
       const laser = new THREE.Mesh(laserGeometry, laserMaterial);
       
       laser.position.copy(position);

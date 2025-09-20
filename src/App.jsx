@@ -57,7 +57,12 @@ function App() {
         <About/>
         <Experience workData={dummyDataWork} educationData={dummyDataEducation}/>
       </div>
-            <StarWars width={800} height={600} />
+    <StarWars 
+        width={800} 
+        height={600} 
+        xwingModelPath="/models/xwing.glb" 
+        tieFighterModelPath='/models/tiefighter.glb'
+      />
 
     </>
   )
