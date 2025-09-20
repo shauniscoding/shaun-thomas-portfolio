@@ -30,7 +30,7 @@ const Experience = ({workData, educationData}) => {
       </div>
 
       {/* Text Container */}
-<div className="relative w-full max-w-3xl h-[400px] border-2 border-white flex flex-col items-center justify-start rounded-lg p-4 overflow-y-auto"> 
+    <div className="relative w-full max-w-3xl h-[400px] border-2 border-white flex flex-col items-center justify-start rounded-lg p-4 overflow-y-auto"> 
         {selectedData.map((experience, index) => (
         <div
           key={index}

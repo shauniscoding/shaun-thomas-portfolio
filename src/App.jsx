@@ -2,8 +2,9 @@ import { useState } from 'react'
 import Navbar from './Navbar'
 import About from './About'
 import Experience from './Experience'
-import './App.css'
+import Skills from './Skills'
 import StarWars from './Starwars'
+import './App.css'
 
 
 const dummyDataWork = [
@@ -48,6 +49,53 @@ const dummyDataEducation = [
   },
 ];
 
+const dummySkills = {
+  "Frontend": [
+    { "name": "React", "icon": "FaReact", "color": "#61DAFB" },
+    { "name": "Vue.js", "icon": "FaReact", "color": "#42B883" },
+    { "name": "Next.js", "icon": "FaReact", "color": "#000000" },
+    { "name": "TypeScript", "icon": "FaReact", "color": "#3178C6" },
+    { "name": "JavaScript (ES6+)", "icon": "FaReact", "color": "#F7DF1E" },
+    { "name": "HTML5", "icon": "FaReact", "color": "#E34F26" },
+    { "name": "CSS3 / SCSS", "icon": "FaReact", "color": "#1572B6" },
+    { "name": "TailwindCSS", "icon": "FaReact", "color": "#38B2AC" },
+    { "name": "Bootstrap", "icon": "FaReact", "color": "#7952B3" }
+  ],
+  "Backend": [
+    { "name": "Node.js", "icon": "FaReact", "color": "#339933" },
+    { "name": "Express.js", "icon": "FaReact", "color": "#000000" },
+    { "name": "Django", "icon": "FaReact", "color": "#092E20" },
+    { "name": "Flask", "icon": "FaReact", "color": "#000000" },
+    { "name": "Java (Spring Boot)", "icon": "FaReact", "color": "#6DB33F" },
+    { "name": "C# (.NET Core)", "icon": "FaReact", "color": "#239120" },
+    { "name": "GraphQL", "icon": "FaReact", "color": "#E10098" },
+    { "name": "REST API design", "icon": "FaReact", "color": "#333333" }
+  ],
+  "Database/Cloud": [
+    { "name": "PostgreSQL", "icon": "FaReact", "color": "#336791" },
+    { "name": "MySQL", "icon": "FaReact", "color": "#4479A1" },
+    { "name": "MongoDB", "icon": "FaReact", "color": "#47A248" },
+    { "name": "SQLite", "icon": "FaReact", "color": "#003B57" },
+    { "name": "Redis", "icon": "FaReact", "color": "#DC382D" },
+    { "name": "Firebase", "icon": "FaReact", "color": "#FFCA28" },
+    { "name": "Supabase", "icon": "FaReact", "color": "#3ECF8E" },
+    { "name": "AWS (EC2, S3, Lambda)", "icon": "FaReact", "color": "#FF9900" },
+    { "name": "Google Cloud", "icon": "FaReact", "color": "#4285F4" },
+    { "name": "Docker", "icon": "FaReact", "color": "#2496ED" }
+  ],
+  "WorkFlow": [
+    { "name": "Git / GitHub", "icon": "FaReact", "color": "#181717" },
+    { "name": "CI/CD (GitHub Actions, Jenkins)", "icon": "FaReact", "color": "#D24939" },
+    { "name": "Agile / Scrum", "icon": "FaReact", "color": "#0052CC" },
+    { "name": "Jira", "icon": "FaReact", "color": "#0052CC" },
+    { "name": "Trello", "icon": "FaReact", "color": "#0079BF" },
+    { "name": "Figma (UI/UX collaboration)", "icon": "FaReact", "color": "#F24E1E" },
+    { "name": "Notion", "icon": "FaReact", "color": "#000000" },
+    { "name": "Slack / Discord", "icon": "FaReact", "color": "#4A154B" }
+  ]
+};
+
+
 function App() {
 
   return (
@@ -56,13 +104,14 @@ function App() {
        <div className="pt-15">
         <About/>
         <Experience workData={dummyDataWork} educationData={dummyDataEducation}/>
+        <Skills skillsData={dummySkills}/>
       </div>
-    <StarWars 
+    {/* <StarWars 
         width={1500} 
         height={1000} 
         xwingModelPath="/models/xwing.glb" 
         tieFighterModelPath='/models/tiefighter.glb'
-      />
+      /> */}
 
     </>
   )

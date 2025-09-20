@@ -18,16 +18,16 @@ const Navbar = () => {
 
           {/* Navigation links */}
           <div className="flex space-x-4">
-            <a href="#home" className="text-white-600 hover:text-gray-400 px-3 py-2 text-lg font-medium transition-colors">
-              Home
-            </a>
             <a href="#about" className="text-white-600 hover:text-gray-400 px-3 py-2 text-lg font-medium transition-colors">
-              Background
+              About
             </a>
-            <a href="#services" className="text-white-600 hover:text-gray-400 px-3 py-2 text-lg font-medium transition-colors">
-              Tools
+            <a href="#journey" className="text-white-600 hover:text-gray-400 px-3 py-2 text-lg font-medium transition-colors">
+              Journey
             </a>
-            <a href="#contact" className="text-white-600 hover:text-gray-400 px-3 py-2 text-lg font-medium transition-colors">
+            <a href="#skills" className="text-white-600 hover:text-gray-400 px-3 py-2 text-lg font-medium transition-colors">
+              Skills
+            </a>
+            <a href="#projects" className="text-white-600 hover:text-gray-400 px-3 py-2 text-lg font-medium transition-colors">
               Projects
             </a>
           </div>
