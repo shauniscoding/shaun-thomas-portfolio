@@ -1,8 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 
-// Note: You'll need to install and import GLTFLoader separately in a real project
-// For now, we'll provide a fallback to the makeshift ships
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 const StarWars = ({ 
@@ -49,29 +47,12 @@ const StarWars = ({
     dirLight.position.set(0, 50, 50); // above & in front of ships
     dirLight.castShadow = true;
     scene.add(dirLight);
-
-    // Optional helper so you can see where the light is
-    const dirLightHelper = new THREE.DirectionalLightHelper(dirLight, 5);
-    scene.add(dirLightHelper);
     // --- End lighting setup ---
 
 
     // Raycaster for mouse interactions
     const raycaster = new THREE.Raycaster();
     raycasterRef.current = raycaster;
-
-    // Add stars in background
-    // const starGeometry = new THREE.SphereGeometry(0.2, 4, 4);
-    // const starMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    // for (let i = 0; i < 300; i++) {
-    //   const star = new THREE.Mesh(starGeometry, starMaterial);
-    //   star.position.set(
-    //     (Math.random() - 0.5) * 300,
-    //     (Math.random() - 0.5) * 300,
-    //     (Math.random() - 0.5) * 300
-    //   );
-    //   scene.add(star);
-    // }
 
     const ships = [];
     shipsRef.current = ships;
@@ -107,7 +88,6 @@ const StarWars = ({
             const maxDimension = Math.max(size.x, size.y, size.z);
             const scale = 5 / maxDimension; // Adjust this value as needed
             model.scale.setScalar(scale);
-            
             console.log('Applied scale:', scale);
             
             // Ensure materials are set up properly
@@ -183,6 +163,8 @@ const StarWars = ({
         // Use loaded model
         console.log('Using 3D model for X-wing');
         group = xwingModel.clone();
+          group.rotation.y = Math.PI;
+
       } else {
         // Fallback to makeshift model
         console.log('Using fallback geometry for X-wing');
@@ -520,8 +502,12 @@ const StarWars = ({
         ship.rotation.z = THREE.MathUtils.lerp(ship.rotation.z, bankAngle, 0.1);
         
         // Face movement direction
-        ship.lookAt(ship.position.clone().add(finalVelocity));
-        
+        if (ship.userData.type === 'xwing') {
+          // X-wing models are backwards, so reverse the direction
+          ship.lookAt(ship.position.clone().sub(finalVelocity));
+        } else {
+          ship.lookAt(ship.position.clone().add(finalVelocity));
+        }        
         // Remove ships that are too far away
         if (Math.abs(ship.position.x) > 90 || Math.abs(ship.position.z) > 90) {
           scene.remove(ship);
