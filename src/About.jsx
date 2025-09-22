@@ -87,8 +87,8 @@ const About = () =>  {
 
             {/* Resume Download */}
             <a
-              href="/resume.pdf"
-              download
+               href="/shaun_thomas_resume_2025.pdf"
+               download="Shaun_Thomas_Resume_2025.pdf"
               className="relative group p-3 bg-green-600 text-white rounded-full shadow hover:bg-green-700 transition"
             >
               <FaFileDownload size={24} />
