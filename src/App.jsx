@@ -3,6 +3,7 @@ import Navbar from './Navbar'
 import About from './About'
 import Experience from './Experience'
 import Skills from './Skills'
+import Project from './Project'
 import StarWars from './Starwars'
 import './App.css'
 
@@ -112,7 +113,14 @@ function App() {
         xwingModelPath="/models/xwing.glb" 
         tieFighterModelPath='/models/tiefighter.glb'
       /> */}
-
+      <Project
+        name="Portfolio Website"
+        description="A modern portfolio website showcasing my projects and skills."
+        link="https://example.com"
+        image="/vite.svg"
+        techstack={["React", "CSS", "JavaScript"]}
+        github="https://example.com"
+      />
     </>
   )
 }
