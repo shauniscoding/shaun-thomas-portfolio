@@ -96,6 +96,41 @@ const dummySkills = {
   ]
 };
 
+const dummyProjects = [
+  {
+    "name": "Portfolio Website",
+    "description": "A modern portfolio website showcasing my projects and skills. fvsdf vsdfv sdfvsd fvsdfv sdfvs dfvsdfvs dfvsdv sdfv",
+    "link": "https://example.com",
+    "github": "https://example.com",
+    "image": "/vite.svg",
+    "techstack": ["React", "CSS", "JavaScript"]
+  },
+  {
+    "name": "E-commerce App",
+    "description": "An online store with shopping cart and payment integration.",
+    "link": "https://example.com",
+    "github": "https://example.com",
+    "image": "/vite.svg",
+    "techstack": ["React", "Node", "MongoDB"]
+  },
+  {
+    "name": "Blog Platform",
+    "description": "A blogging platform with user authentication and rich-text editing.",
+    "link": "https://example.com",
+    "github": "https://example.com",
+    "image": "/vite.svg",
+    "techstack": ["NextJS", "Tailwind", "GraphQL"]
+  },
+  {
+    "name": "Chat App",
+    "description": "Real-time chat application with WebSocket support.",
+    "link": "https://example.com",
+    "github": "https://example.com",
+    "image": "/vite.svg",
+    "techstack": ["React", "Node", "Socket.io"]
+  }
+]
+
 
 function App() {
 
@@ -106,6 +141,27 @@ function App() {
         <About/>
         <Experience workData={dummyDataWork} educationData={dummyDataEducation}/>
         <Skills skillsData={dummySkills}/>
+
+
+        {/* Projects Section */}
+      <div className="mt-10">
+        <h2 className="text-2xl font-semibold mb-4">Projects</h2>
+
+        <div className="max-w-[1200px] mx-auto px-4 flex flex-wrap gap-6 justify-center">
+          {dummyProjects.map((project, index) => (
+            <Project
+              key={index}
+              name={project.name}
+              description={project.description}
+              link={project.link}
+              github={project.github}
+              image={project.image}
+              techstack={project.techstack}
+            />
+          ))}
+        </div>
+      </div>
+     
       </div>
     {/* <StarWars 
         width={1500} 
@@ -113,14 +169,6 @@ function App() {
         xwingModelPath="/models/xwing.glb" 
         tieFighterModelPath='/models/tiefighter.glb'
       /> */}
-      <Project
-        name="Portfolio Website"
-        description="A modern portfolio website showcasing my projects and skills."
-        link="https://example.com"
-        image="/vite.svg"
-        techstack={["React", "CSS", "JavaScript"]}
-        github="https://example.com"
-      />
     </>
   )
 }
