@@ -137,32 +137,31 @@ function App() {
   return (
     <>
       <Navbar/>
-       <div className="pt-15">
-        <About/>
-        <Experience workData={dummyDataWork} educationData={dummyDataEducation}/>
-        <Skills skillsData={dummySkills}/>
+       <div className="pt-15 max-w-[800px] mx-auto px-4 bg-gray-800">
+          <About />
+          <Experience workData={dummyDataWork} educationData={dummyDataEducation} />
+          <Skills skillsData={dummySkills} />
 
+          {/* Projects Section */}
+          <div className="mt-10 text-center">
+            <h2 className="text-2xl font-semibold mb-4">Projects</h2>
 
-        {/* Projects Section */}
-      <div className="mt-10">
-        <h2 className="text-2xl font-semibold mb-4">Projects</h2>
-
-        <div className="max-w-[1200px] mx-auto px-4 flex flex-wrap gap-6 justify-center">
-          {dummyProjects.map((project, index) => (
-            <Project
-              key={index}
-              name={project.name}
-              description={project.description}
-              link={project.link}
-              github={project.github}
-              image={project.image}
-              techstack={project.techstack}
-            />
-          ))}
+            <div className="flex flex-wrap gap-6 justify-center">
+              {dummyProjects.map((project, index) => (
+                <Project
+                  key={index}
+                  name={project.name}
+                  description={project.description}
+                  link={project.link}
+                  github={project.github}
+                  image={project.image}
+                  techstack={project.techstack}
+                />
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
-     
-      </div>
+
     {/* <StarWars 
         width={1500} 
         height={1000} 

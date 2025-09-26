@@ -9,7 +9,7 @@ const shaun_name = "<Shaun Thomas/>"
 
 const About = () =>  {
     return (
-        <div className="flex flex-col justify-center">
+<div className="flex flex-col justify-center w-full">
             <div className="flex items-center gap-8 justify-center">
               {/* Left: Img + Location */}
               <div className="flex flex-col items-center">
