@@ -23,6 +23,7 @@
 ::-webkit-scrollbar-thumb {
   background: #8db5ed;      /* Tailwind gray-600 */
   border-radius: 9999px;
+  width: 5px;              /* thinner bar */
 }
 
 /* Hover effect */
@@ -36,6 +37,8 @@
   margin-top: 3px;         /* space at top */
   margin-bottom: 3px;      /* space at bottom */
   margin-right: 20px;
+    width: 5px;              /* thinner bar */
+
 }
 
 
