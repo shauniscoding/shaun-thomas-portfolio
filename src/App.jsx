@@ -133,6 +133,7 @@ function App() {
       <div className="relative z-10" >
         <Navbar />
         <div className="pt-15 max-w-[800px] mx-auto px-4 bg-gray-800/90 rounded-lg shadow-lg" id="about">
+        {/* <div className="pt-15 max-w-[800px] mx-auto px-4 rounded-lg shadow-lg" id="about"> */}
           <About />
           <Experience workData={dummyDataWork} educationData={dummyDataEducation} />
           <Skills skillsData={dummySkills} />

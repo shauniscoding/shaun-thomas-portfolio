@@ -69,7 +69,8 @@ const Skills = ({ skillsData }) => {
       </div>
 
       {/* Skills section */}
-      <div className="relative w-full max-w-5xl h-[400px] border-2 border-white grid grid-cols-5 gap-4 justify-items-center content-start rounded-lg py-8 px-4 overflow-y-scroll">
+      <div className="relative w-full max-w-5xl h-[400px] border-2 border-white rounded-lg py-8 px-4 overflow-y-auto overflow-x-hidden">
+        <div className="flex flex-wrap gap-4">
         {selectedData.map((skill, index) => {
           const tech = TECH_ICON_MAP[skill.key];
           if (!tech) return null;
@@ -78,7 +79,7 @@ const Skills = ({ skillsData }) => {
           return (
             <div
               key={index}
-              className="group relative flex flex-col items-center justify-center w-24 h-24 rounded-xl bg-gray-800/60 shadow-md hover:scale-105 transform transition-all duration-300 cursor-pointer"
+              className="group relative flex flex-col items-center justify-center w-24 h-24 rounded-xl bg-gray-800/60 shadow-md hover:scale-105 transform transition-all duration-300 cursor-pointer flex-shrink-0"
               style={{
                 color: tech.color,
                 boxShadow: "0 0 6px 0 transparent",
@@ -102,6 +103,7 @@ const Skills = ({ skillsData }) => {
             </div>
           );
         })}
+        </div>
       </div>
     </div>
   );
