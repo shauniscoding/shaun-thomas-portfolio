@@ -141,7 +141,7 @@ function App() {
           {/* Projects Section */}
           <div className="mt-10 text-center" id="projects">
             <h2 className="text-2xl font-semibold mb-4">Projects</h2>
-            <div className="flex flex-wrap gap-6 justify-center">
+            <div className="flex flex-wrap gap-6 justify-start">
               {dummyProjects.map((project, index) => (
                 <Project
                   key={index}
