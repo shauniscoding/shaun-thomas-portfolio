@@ -130,15 +130,15 @@ function App() {
       </div> */}
 
       {/* Content on top */}
-      <div className="relative z-10">
+      <div className="relative z-10" >
         <Navbar />
-        <div className="pt-15 max-w-[800px] mx-auto px-4 bg-gray-800/90 rounded-lg shadow-lg">
+        <div className="pt-15 max-w-[800px] mx-auto px-4 bg-gray-800/90 rounded-lg shadow-lg" id="about">
           <About />
           <Experience workData={dummyDataWork} educationData={dummyDataEducation} />
           <Skills skillsData={dummySkills} />
 
           {/* Projects Section */}
-          <div className="mt-10 text-center">
+          <div className="mt-10 text-center" id="projects">
             <h2 className="text-2xl font-semibold mb-4">Projects</h2>
             <div className="flex flex-wrap gap-6 justify-center">
               {dummyProjects.map((project, index) => (

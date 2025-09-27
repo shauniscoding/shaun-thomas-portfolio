@@ -46,7 +46,7 @@ const Skills = ({ skillsData }) => {
   const [selectedData, setSelectedData] = useState(skillsData["Frontend"]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-4">
+    <div className="flex flex-col items-center justify-center min-h-screen px-4" id="skills">
       {/* Top Buttons */}
       <div className="flex w-full max-w-3xl h-12 mb-6 gap-4">
         {["Frontend", "Backend", "Database/Cloud", "WorkFlow"].map((category) => (

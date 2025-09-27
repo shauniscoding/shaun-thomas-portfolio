@@ -21,8 +21,8 @@ const Navbar = () => {
             <a href="#about" className="text-white-600 hover:text-gray-400 px-3 py-2 text-lg font-medium transition-colors">
               About
             </a>
-            <a href="#journey" className="text-white-600 hover:text-gray-400 px-3 py-2 text-lg font-medium transition-colors">
-              Journey
+            <a href="#experience" className="text-white-600 hover:text-gray-400 px-3 py-2 text-lg font-medium transition-colors">
+              Experience
             </a>
             <a href="#skills" className="text-white-600 hover:text-gray-400 px-3 py-2 text-lg font-medium transition-colors">
               Skills

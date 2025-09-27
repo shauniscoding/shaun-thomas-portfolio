@@ -5,7 +5,7 @@ const Experience = ({ workData, educationData }) => {
   const [selectedData, setSelectedData] = useState(workData);
 
   return (
-    <div className="w-full max-w-[900px] mx-auto px-4 py-12">
+    <div className="w-full max-w-[900px] mx-auto px-4 py-12" id="experience">
       {/* Top Buttons */}
       <div className="flex w-full h-12 mb-6 gap-4">
         <button
