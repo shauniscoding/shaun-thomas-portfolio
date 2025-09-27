@@ -70,7 +70,13 @@ const Skills = ({ skillsData }) => {
 
       {/* Skills section */}
       <div className="relative w-full max-w-5xl h-[400px] border-2 border-white rounded-lg py-8 px-4 overflow-y-auto overflow-x-hidden">
-        <div className="flex flex-wrap gap-4">
+        <div 
+          className="grid gap-4 justify-center"
+          style={{ 
+            gridTemplateColumns: 'repeat(auto-fit, 6rem)',
+            justifyContent: 'center'
+          }}
+        >
         {selectedData.map((skill, index) => {
           const tech = TECH_ICON_MAP[skill.key];
           if (!tech) return null;
