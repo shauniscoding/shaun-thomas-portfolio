@@ -64,7 +64,7 @@ const Project = ({ name, description, link, github, techstack, image }) => {
           <img
             src={image}
             alt={name}
-            className="w-7/8 h-30 object-cover rounded-md border border-gray-500 mx-auto block
+            className="w-7/8 h-30 object-cover rounded-md mx-auto block
                        filter brightness-70 transition-all duration-500 hover:brightness-110"
           />
         )}

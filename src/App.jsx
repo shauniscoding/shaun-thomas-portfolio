@@ -5,6 +5,7 @@ import Experience from './Experience'
 import Skills from './Skills'
 import Project from './Project'
 import StarWars from './Starwars'
+import DonutHead from './DonutHead'
 import './App.css'
 
 
@@ -120,21 +121,22 @@ function App() {
   return (
     <div className="relative w-full min-h-screen">
       {/* StarWars Fullscreen Background */}
-      {/* <div className="fixed inset-0 -z-10">
+     {/* <div className="fixed inset-0 -z-10">
         <StarWars 
           width={window.innerWidth} 
           height={window.innerHeight} 
           xwingModelPath="/models/xwing.glb" 
           tieFighterModelPath="/models/tiefighter.glb" 
         />
-      </div> */}
+      </div>  */}
 
       {/* Content on top */}
       <div className="relative z-10" >
         <Navbar />
-        <div className="pt-15 max-w-[800px] mx-auto px-4 bg-gray-800/90 rounded-lg shadow-lg" id="about">
-        {/* <div className="pt-15 max-w-[800px] mx-auto px-4 rounded-lg shadow-lg" id="about"> */}
+        {/* <div className="pt-15 max-w-[800px] mx-auto px-4 bg-gray-800/90 rounded-lg shadow-lg" id="about"> */}
+        <div className="pt-15 max-w-[800px] mx-auto px-4 rounded-lg shadow-lg" id="about">
           <About />
+          <DonutHead/>
           <Experience workData={dummyDataWork} educationData={dummyDataEducation} />
           <Skills skillsData={dummySkills} />
 
