@@ -15,7 +15,7 @@ const Experience = ({ workData, educationData }) => {
           }}
           className={`cursor-pointer flex-1 text-white py-2 rounded-lg transition ${
             selected === "work"
-              ? "border-2 border-white bg-gray-800"
+              ? "bg-gray-800"
               : "border border-transparent hover:bg-gray-700"
           }`}
         >
@@ -28,7 +28,7 @@ const Experience = ({ workData, educationData }) => {
           }}
           className={`cursor-pointer flex-1 text-white py-2 rounded-lg transition ${
             selected === "education"
-              ? "border-2 border-white bg-gray-800"
+              ? "bg-gray-800"
               : "border border-transparent hover:bg-gray-700"
           }`}
         >
@@ -37,7 +37,7 @@ const Experience = ({ workData, educationData }) => {
       </div>
 
       {/* Text Container */}
-      <div className="relative w-full h-[400px] border-2 border-white flex flex-col items-center justify-start rounded-lg p-4 overflow-y-auto">
+      <div className="relative w-full h-[400px] flex flex-col items-center justify-start rounded-lg p-4 overflow-y-auto bg-gray-800/60">
         {selectedData.map((experience, index) => (
           <div
             key={index}
