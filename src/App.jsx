@@ -135,29 +135,35 @@ function App() {
         <Navbar />
         {/* <div className="pt-15 max-w-[800px] mx-auto px-4 bg-gray-800/90 rounded-lg shadow-lg" id="about"> */}
         <div className="pt-15 max-w-[800px] mx-auto px-4 rounded-lg shadow-lg" id="about">
-          <About />
-          <DonutHead/>
-          <Experience workData={dummyDataWork} educationData={dummyDataEducation} />
-          <Skills skillsData={dummySkills} />
+  <About />
 
-          {/* Projects Section */}
-          <div className="mt-10 text-center" id="projects">
-            <h2 className="text-2xl font-semibold mb-4">Projects</h2>
-            <div className="flex flex-wrap gap-6 justify-start">
-              {dummyProjects.map((project, index) => (
-                <Project
-                  key={index}
-                  name={project.name}
-                  description={project.description}
-                  link={project.link}
-                  github={project.github}
-                  image={project.image}
-                  techstack={project.techstack}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
+  {/* Center DonutHead */}
+  <div className="flex justify-center items-center my-8">
+    <DonutHead />
+  </div>
+
+  <Experience workData={dummyDataWork} educationData={dummyDataEducation} />
+  <Skills skillsData={dummySkills} />
+
+  {/* Projects Section */}
+  <div className="mt-10 text-center" id="projects">
+    <h2 className="text-2xl font-semibold mb-4">Projects</h2>
+    <div className="flex flex-wrap gap-6 justify-start">
+      {dummyProjects.map((project, index) => (
+        <Project
+          key={index}
+          name={project.name}
+          description={project.description}
+          link={project.link}
+          github={project.github}
+          image={project.image}
+          techstack={project.techstack}
+        />
+      ))}
+    </div>
+  </div>
+</div>
+
       </div>
     </div>
   );

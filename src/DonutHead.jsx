@@ -18,7 +18,11 @@ export default function DonutHead() {
       0.1,
       1000
     );
-    camera.position.z = 5;
+    // Camera position in 3D space (X, Y, Z)
+    // X → move camera left (-) or right (+)
+    // Y → move camera down (-) or up (+) — controls vertical framing
+    // Z → move camera closer (-) or farther away (+) from the scene
+    camera.position.set(0, 1.5, 3.5); 
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(
@@ -43,24 +47,51 @@ export default function DonutHead() {
     let headModel = null;
     let donutModel = null;
     let donutAttachedToMouse = false;
-    const donutPosition = new THREE.Vector3(2, 0, 0);
+    const donutPosition = new THREE.Vector3(0, 0, 0);
     const mousePos = new THREE.Vector2();
     const raycaster = new THREE.Raycaster();
 
-    // Load GLB models
+    // Load models
     const loader = new GLTFLoader();
-    loader.load("/models/head.glb", (gltf) => {
-      headModel = gltf.scene;
-      headModel.scale.set(1.2, 1.2, 1.2);
-      headModel.position.set(-2, 0, 0);
-      scene.add(headModel);
-    });
+
+   loader.load("/models/head.glb", (gltf) => {
+  headModel = gltf.scene;
+
+  // Scale of the head model (X, Y, Z)  
+  // Increase numbers to make it bigger, decrease for smaller.  
+  // Example: (2, 2, 2) = twice as large in all directions.
+  headModel.scale.set(1, 1, 1); 
+
+  // Position of the head in 3D space (X, Y, Z)
+  // X → move left (-) or right (+)
+  // Y → move down (-) or up (+)
+  // Z → move closer to camera (-) or farther back (+)
+  headModel.position.set(0, 0, 0); 
+
+  // Rotation of the head (in radians)
+  // X → tilt head up/down (negative = look up, positive = look down)
+  // Y → turn head left/right (like shaking "no")
+  // Z → tilt sideways (ear to shoulder)
+  // Example: -Math.PI / 6 ≈ -30°, Math.PI / 4 ≈ 45°
+  headModel.rotation.x = -Math.PI / 6; 
+
+  scene.add(headModel);
+});
 
     loader.load("/models/donut.glb", (gltf) => {
       donutModel = gltf.scene;
-      donutModel.scale.set(1.5, 1.5, 1.5);
-      donutModel.position.copy(donutPosition);
-      scene.add(donutModel);
+
+  // Make the donut big and position it beside Homer
+  // Scale → size of donut
+  donutModel.scale.set(10, 10, 4); 
+  
+  // Position beside Homer (X, Y, Z)
+  // X → move right (+2 = to his right, -2 = to his left)
+  // Y → vertical alignment
+  // Z → depth (keep same as head so it sits beside him)
+donutModel.position.set(0, 13, 5);
+
+  scene.add(donutModel);
     });
 
     // Mouse move handler
@@ -72,7 +103,7 @@ export default function DonutHead() {
       mousePos.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
       raycaster.setFromCamera(mousePos, camera);
-      const distance = 5;
+      const distance = 4; // closer projection to camera
       const pos = raycaster.ray.origin
         .clone()
         .add(raycaster.ray.direction.clone().multiplyScalar(distance));
@@ -84,7 +115,6 @@ export default function DonutHead() {
       if (event.button !== 0 || !donutModel) return;
 
       if (!donutAttachedToMouse) {
-        // Try to pick up donut
         const rect = renderer.domElement.getBoundingClientRect();
         const clickX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
         const clickY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
@@ -96,7 +126,6 @@ export default function DonutHead() {
           donutAttachedToMouse = true;
         }
       } else {
-        // Drop the donut
         donutAttachedToMouse = false;
       }
     }
@@ -112,7 +141,7 @@ export default function DonutHead() {
       if (headModel && donutModel) {
         donutModel.position.copy(donutPosition);
         headModel.lookAt(donutModel.position);
-        donutModel.rotation.y += 0.01;
+        // donutModel.rotation.y += 0.01;
       }
 
       renderer.render(scene, camera);
@@ -147,5 +176,5 @@ export default function DonutHead() {
     };
   }, []);
 
-  return <div ref={containerRef} className="w-full h-screen bg-black" />;
+  return <div ref={containerRef} className="w-160 h-80 bg-black" />;
 }
