@@ -10,7 +10,7 @@ export default function DonutHead() {
 
     // Scene setup
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x1a1a2e);
+    scene.background = new THREE.Color(0x14151a);
 
     const camera = new THREE.PerspectiveCamera(
       75,
@@ -18,11 +18,7 @@ export default function DonutHead() {
       0.1,
       1000
     );
-    // Camera position in 3D space (X, Y, Z)
-    // X → move camera left (-) or right (+)
-    // Y → move camera down (-) or up (+) — controls vertical framing
-    // Z → move camera closer (-) or farther away (+) from the scene
-    camera.position.set(0, 1.5, 3.5); 
+    camera.position.set(0, 1.75, 2.5);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(
@@ -45,103 +41,44 @@ export default function DonutHead() {
 
     // State
     let headModel = null;
-    let donutModel = null;
-    let donutAttachedToMouse = false;
-    const donutPosition = new THREE.Vector3(0, 0, 0);
-    const mousePos = new THREE.Vector2();
+    const mousePos = new THREE.Vector2(0, 0);
     const raycaster = new THREE.Raycaster();
+    const target = new THREE.Vector3();
 
-    // Load models
+    // Load Homer head
     const loader = new GLTFLoader();
-
-   loader.load("/models/head.glb", (gltf) => {
-  headModel = gltf.scene;
-
-  // Scale of the head model (X, Y, Z)  
-  // Increase numbers to make it bigger, decrease for smaller.  
-  // Example: (2, 2, 2) = twice as large in all directions.
-  headModel.scale.set(1, 1, 1); 
-
-  // Position of the head in 3D space (X, Y, Z)
-  // X → move left (-) or right (+)
-  // Y → move down (-) or up (+)
-  // Z → move closer to camera (-) or farther back (+)
-  headModel.position.set(0, 0, 0); 
-
-  // Rotation of the head (in radians)
-  // X → tilt head up/down (negative = look up, positive = look down)
-  // Y → turn head left/right (like shaking "no")
-  // Z → tilt sideways (ear to shoulder)
-  // Example: -Math.PI / 6 ≈ -30°, Math.PI / 4 ≈ 45°
-  headModel.rotation.x = -Math.PI / 6; 
-
-  scene.add(headModel);
-});
-
-    loader.load("/models/donut.glb", (gltf) => {
-      donutModel = gltf.scene;
-
-  // Make the donut big and position it beside Homer
-  // Scale → size of donut
-  donutModel.scale.set(10, 10, 4); 
-  
-  // Position beside Homer (X, Y, Z)
-  // X → move right (+2 = to his right, -2 = to his left)
-  // Y → vertical alignment
-  // Z → depth (keep same as head so it sits beside him)
-donutModel.position.set(0, 13, 5);
-
-  scene.add(donutModel);
+    loader.load("/models/head.glb", (gltf) => {
+      headModel = gltf.scene;
+      headModel.scale.set(1, 1, 1);
+      headModel.position.set(0, 0, 0);
+    //   headModel.rotation.x = -Math.PI / 6;
+      scene.add(headModel);
     });
 
-    // Mouse move handler
+    // Track mouse globally
     function onMouseMove(event) {
-      if (!donutAttachedToMouse || !donutModel) return;
+      const width = window.innerWidth;
+      const height = window.innerHeight;
 
-      const rect = renderer.domElement.getBoundingClientRect();
-      mousePos.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-      mousePos.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-      raycaster.setFromCamera(mousePos, camera);
-      const distance = 4; // closer projection to camera
-      const pos = raycaster.ray.origin
-        .clone()
-        .add(raycaster.ray.direction.clone().multiplyScalar(distance));
-      donutPosition.copy(pos);
+      // Normalized device coordinates (-1 to 1)
+      mousePos.x = (event.clientX / width) * 2 - 1;
+      mousePos.y = -(event.clientY / height) * 2 + 1;
     }
 
-    // Left click toggles pickup/drop
-    function onMouseDown(event) {
-      if (event.button !== 0 || !donutModel) return;
-
-      if (!donutAttachedToMouse) {
-        const rect = renderer.domElement.getBoundingClientRect();
-        const clickX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-        const clickY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-        raycaster.setFromCamera(new THREE.Vector2(clickX, clickY), camera);
-        const intersects = raycaster.intersectObject(donutModel, true);
-
-        if (intersects.length > 0) {
-          donutAttachedToMouse = true;
-        }
-      } else {
-        donutAttachedToMouse = false;
-      }
-    }
-
-    renderer.domElement.addEventListener("mousemove", onMouseMove);
-    renderer.domElement.addEventListener("mousedown", onMouseDown);
+    window.addEventListener("mousemove", onMouseMove);
 
     // Animation loop
     let animationId;
     function animate() {
       animationId = requestAnimationFrame(animate);
 
-      if (headModel && donutModel) {
-        donutModel.position.copy(donutPosition);
-        headModel.lookAt(donutModel.position);
-        // donutModel.rotation.y += 0.01;
+      if (headModel) {
+        // Project mouse into 3D space in front of camera
+        raycaster.setFromCamera(mousePos, camera);
+        target.copy(raycaster.ray.origin).add(raycaster.ray.direction.multiplyScalar(5));
+
+        // Homer looks at this point
+        headModel.lookAt(target);
       }
 
       renderer.render(scene, camera);
@@ -151,7 +88,6 @@ donutModel.position.set(0, 13, 5);
 
     // Handle window resize
     function onWindowResize() {
-      if (!containerRef.current) return;
       camera.aspect =
         containerRef.current.clientWidth / containerRef.current.clientHeight;
       camera.updateProjectionMatrix();
@@ -160,15 +96,13 @@ donutModel.position.set(0, 13, 5);
         containerRef.current.clientHeight
       );
     }
-
     window.addEventListener("resize", onWindowResize);
 
     // Cleanup
     return () => {
       cancelAnimationFrame(animationId);
       window.removeEventListener("resize", onWindowResize);
-      renderer.domElement.removeEventListener("mousemove", onMouseMove);
-      renderer.domElement.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("mousemove", onMouseMove);
       if (containerRef.current && renderer.domElement) {
         containerRef.current.removeChild(renderer.domElement);
       }
@@ -176,5 +110,5 @@ donutModel.position.set(0, 13, 5);
     };
   }, []);
 
-  return <div ref={containerRef} className="w-160 h-80 bg-black" />;
+  return <div ref={containerRef} className="w-200 h-60 bg-[#14151A]" />;
 }

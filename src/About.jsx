@@ -1,6 +1,7 @@
 import React from "react";
 import logo from '../src/assets/logo.png'
 import shaun from '../src/assets/shaun-placeholder.jpg'
+import DonutHead from "./DonutHead";
 import { FaLocationDot, FaLinkedin  } from "react-icons/fa6";
 import { FaFileDownload, FaGithub  } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
@@ -41,9 +42,8 @@ const About = () =>  {
 
             {/* about paragraph */}
             <p className="mt-6 text-center max-w-2xl mx-auto text-white-700 leading-relaxed">
-              I enjoy creating innovative solutions through programming and problem-solving. 
-              I thrive on tackling complex challenges, learning new technologies, 
-              and building projects that combine creativity with functionality
+              I’m a software engineer who enjoys solving complex problems and building innovative projects that merge creativity with functionality. 
+              Always curious, I love exploring new technologies and turning ideas into reality.
             </p>
 
           {/* links */}
@@ -85,10 +85,11 @@ const About = () =>  {
               </span>
             </a>
 
-            {/* Resume Download */}
+           {/* Resume Link */}
             <a
-               href="/shaun_thomas_resume_2025.pdf"
-               download="Shaun_Thomas_Resume_2025.pdf"
+              href="/shaun_thomas_resume_2025.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               className="relative group p-3 bg-green-600 text-white rounded-full shadow hover:bg-green-700 transition"
             >
               <FaFileDownload size={24} />
@@ -98,6 +99,7 @@ const About = () =>  {
             </a>
           </div>
 
+          <DonutHead/>
         </div>
     )
 
