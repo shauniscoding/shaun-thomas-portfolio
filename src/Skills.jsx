@@ -59,7 +59,7 @@ const Skills = ({ skillsData }) => {
             className={`cursor-pointer flex-1 text-white py-2 rounded-lg transition
               ${
                 selected === category
-                  ? "border-2 border-white bg-gray-800"
+                  ? "bg-gray-800"
                   : "border border-transparent hover:bg-gray-700"
               }`}
           >
@@ -69,7 +69,7 @@ const Skills = ({ skillsData }) => {
       </div>
 
       {/* Skills section */}
-      <div className="relative w-full max-w-5xl h-[400px] border-2 border-white rounded-lg py-8 px-4 overflow-y-auto overflow-x-hidden">
+      <div className="relative w-full max-w-5xl h-[400px] rounded-lg py-8 px-4 overflow-y-auto overflow-x-hidden bg-gray-800/60">
         <div 
           className="grid gap-4 justify-center"
           style={{ 
