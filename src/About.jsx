@@ -1,6 +1,5 @@
 import React from "react";
-import logo from '../src/assets/logo.png'
-import shaun from '../src/assets/shaun-placeholder.jpg'
+import shaun from '../src/assets/shaun-placeholder.jpg';
 import DonutHead from "./DonutHead";
 import { FaLocationDot, FaLinkedin } from "react-icons/fa6";
 import { FaFileDownload, FaGithub } from "react-icons/fa";
@@ -12,57 +11,52 @@ const About = () => {
   return (
     <div className="flex flex-col justify-center w-full px-4">
       {/* Top Section */}
-      <div className="flex flex-col md:flex-row items-center gap-8 justify-center">
+      <div className="flex flex-col md:flex-row items-center md:items-end gap-10 justify-center text-center md:text-left">
         {/* Left: Image + Location */}
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center md:items-start">
           <img
             src={shaun}
             alt="Shaun Thomas"
-            className="w-36 h-36 rounded-full object-cover"
+            className="w-28 h-28 rounded-full object-cover"
           />
-          <div className="flex items-center gap-2 mt-2">
-            <FaLocationDot className="text-yellow-200 text-sm" />
-            <h3 className="text-sm text-yellow-200">Placeholder, CA</h3>
+          <div className="relative flex items-center mt-2 justify-center md:justify-start">
+            <FaLocationDot className="absolute -left-5 md:static md:mr-2 text-yellow-200 text-sm" />
+            <span className="text-yellow-200 text-md">Placeholder, CA</span>
           </div>
         </div>
 
         {/* Right: Greeting */}
-<div className="flex flex-col justify-center text-left">
-  {/* Hello There with hover meme */}
-  <div className="relative group inline-block">
-    <h1 className="text-4xl font-bold text-white cursor-pointer">
-      Hello There, I'm 👋
-    </h1>
+        <div className="flex flex-col justify-end">
+          {/* Hello There */}
+          <div className="relative group inline-block">
+            <h1 className="text-3xl md:text-4xl font-bold text-white cursor-pointer">
+              Hello There, 👋
+            </h1>
+          </div>
 
-    {/* Meme Image */}
-    <img
-      src="/" 
-      alt="Meme"
-      className="absolute left-1/2 top-full mt-2 -translate-x-1/2 w-64 h-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg rounded-lg z-50"
-    />
-  </div>
+          {/* Name - stays on one line */}
+          <h1 className="font-bold mt-1 whitespace-nowrap">
+            <span className="text-2xl sm:text-3xl md:text-5xl text-white">I'm </span>
+            <span className="text-3xl sm:text-4xl md:text-6xl text-green-500">{shaun_name}</span>
+          </h1>
 
-  {/* Name */}
-  <h1 className="font-bold mt-1">
-    <span className="text-5xl text-white">I'm </span>
-    <span className="text-7xl text-green-500">{shaun_name}</span>
-  </h1>
-
-  <h3 className="mt-1 text-sm text-gray-400">
-    <span className="text-blue-300">Software Engineer</span> ·{" "}
-    <span className="text-red-400">Fullstack Developer</span>
-  </h3>
-</div>
-
+          {/* Roles */}
+          <h3 className="mt-1 text-gray-400">
+            <span className="text-blue-300 text-md">Software Engineer</span> ·{" "}
+            <span className="text-red-400 text-md">Fullstack Developer</span> ·{" "}
+            <span className="text-red-400 text-md">UFC Enthusiast</span>
+          </h3>
+        </div>
       </div>
 
       {/* About Paragraph */}
-      <p className="mt-6 text-center max-w-2xl mx-auto text-white leading-relaxed inconsolata-light text-xl">
-        I’m a software engineer who enjoys solving complex problems and building innovative projects that make a real impact.
+      <p className="mt-6 text-center max-w-2xl mx-auto text-white leading-relaxed inconsolata-light text-lg sm:text-xl">
+        I’m a software engineer who enjoys solving complex problems and building
+        innovative projects that make a real impact.
       </p>
 
       {/* Social / Links */}
-      <div className="flex justify-center gap-6 mt-6">
+      <div className="flex justify-center gap-6 mt-6 flex-wrap">
         {/* LinkedIn */}
         <a
           href="https://www.linkedin.com/in/shaunthomas2025"
@@ -114,7 +108,10 @@ const About = () => {
         </a>
       </div>
 
-      <DonutHead />
+      {/* Centered DonutHead */}
+      <div className="flex justify-center mt-8">
+        <DonutHead />
+      </div>
     </div>
   );
 };
