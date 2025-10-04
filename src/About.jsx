@@ -57,37 +57,37 @@ const About = () => {
           </h1>
 
           {/* Name Animation */}
-       <h1 className="font-bold mt-1 whitespace-nowrap flex flex-wrap text-3xl md:text-6xl">
-  <span className="text-white mr-2">I'm</span>
-  {shaun_name.split("").map((char, idx) => (
-    <motion.span
-      key={idx}
-      className={char === " " ? "mx-1" : "text-green-500"}
-      initial={{ rotateY: 360, opacity: 0 }}
-      animate={{ rotateY: 0, opacity: 1 }}
-      transition={{ delay: idx * 0.05, type: "spring", stiffness: 200 }}
-    >
-      {char}
-    </motion.span>
-  ))}
-</h1>
+          <h1 className="font-bold mt-1 whitespace-nowrap flex flex-wrap text-3xl md:text-6xl">
+            <span className="text-white mr-2">I'm</span>
+            {shaun_name.split("").map((char, idx) => (
+              <motion.span
+                key={idx}
+                className={char === " " ? "mx-1" : "text-green-500"}
+                initial={{ rotateY: 360, opacity: 0 }}
+                animate={{ rotateY: 0, opacity: 1 }}
+                transition={{ delay: idx * 0.05, type: "spring", stiffness: 200 }}
+              >
+                {char}
+              </motion.span>
+            ))}
+          </h1>
 
-
-
-          {/* Roles Animation (same line) */}
-          <div className="mt-2 text-lg md:text-xl text-gray-400">
+         {/* Roles Animation (same line, tighter spacing) */}
+          <div className="mt-2 flex flex-wrap justify-center md:justify-start gap-1 text-[12px] sm:text-base md:text-lg text-gray-400">
             {showRoles.map((role, idx) => (
               <motion.span
                 key={role.text}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
+                className="flex items-center"
               >
                 <span className={`${role.color}`}>{role.text}</span>
-                {idx < showRoles.length - 1 && <span className="mx-2">·</span>}
+                {idx < showRoles.length - 1 && <span className="mx-1">·</span>}
               </motion.span>
             ))}
           </div>
+
         </div>
       </div>
 
