@@ -17,11 +17,11 @@ const About = () => {
           <img
             src={shaun}
             alt="Shaun Thomas"
-            className="w-28 h-28 rounded-full object-cover"
+            className="w-30 h-30 rounded-full object-cover"
           />
           <div className="relative flex items-center mt-2 justify-center md:justify-start">
             <FaLocationDot className="absolute -left-5 md:static md:mr-2 text-yellow-200 text-sm" />
-            <span className="text-yellow-200 text-md">Placeholder, CA</span>
+            <span className="text-yellow-200 text-lg">Placeholder, CA</span>
           </div>
         </div>
 
@@ -42,15 +42,15 @@ const About = () => {
 
           {/* Roles */}
           <h3 className="mt-1 text-gray-400">
-            <span className="text-blue-300 text-md">Software Engineer</span> ·{" "}
-            <span className="text-red-400 text-md">Fullstack Developer</span> ·{" "}
-            <span className="text-red-400 text-md">UFC Enthusiast</span>
+            <span className="text-blue-300 text-lg">Software Engineer</span> ·{" "}
+            <span className="text-red-400 text-lg">Fullstack Developer</span> ·{" "}
+            <span className="text-red-400 text-lg">UFC Enthusiast</span>
           </h3>
         </div>
       </div>
 
       {/* About Paragraph */}
-      <p className="mt-6 text-center max-w-2xl mx-auto text-white leading-relaxed inconsolata-light text-lg sm:text-xl">
+      <p className="mt-6 text-center max-w-4xl mx-auto text-white leading-relaxed inconsolata-light text-lg sm:text-2xl">
         I’m a software engineer who enjoys solving complex problems and building
         innovative projects that make a real impact.
       </p>
