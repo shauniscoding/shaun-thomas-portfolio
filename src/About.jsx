@@ -57,25 +57,21 @@ const About = () => {
           </h1>
 
           {/* Name Animation */}
-        <h1 className="font-bold mt-1 whitespace-nowrap flex flex-wrap text-3xl md:text-6xl">
-          <span className="text-white mr-2">I'm</span>
-          {formattedName.split(" ").map((word, wIdx) => (
-            <React.Fragment key={wIdx}>
-              {word.split("").map((char, idx) => (
-                <motion.span
-                  key={idx}
-                  className="text-green-500"
-                  initial={{ rotateY: 360, opacity: 0 }}
-                  animate={{ rotateY: 0, opacity: 1 }}
-                  transition={{ delay: idx * 0.05, type: "spring", stiffness: 200 }}
-                >
-                  {char}
-                </motion.span>
-              ))}
-              {wIdx < formattedName.split(" ").length - 1 && <span> </span>}
-            </React.Fragment>
-          ))}
-        </h1>
+       <h1 className="font-bold mt-1 whitespace-nowrap flex flex-wrap text-3xl md:text-6xl">
+  <span className="text-white mr-2">I'm</span>
+  {shaun_name.split("").map((char, idx) => (
+    <motion.span
+      key={idx}
+      className={char === " " ? "mx-1" : "text-green-500"}
+      initial={{ rotateY: 360, opacity: 0 }}
+      animate={{ rotateY: 0, opacity: 1 }}
+      transition={{ delay: idx * 0.05, type: "spring", stiffness: 200 }}
+    >
+      {char}
+    </motion.span>
+  ))}
+</h1>
+
 
 
           {/* Roles Animation (same line) */}
