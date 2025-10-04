@@ -121,53 +121,58 @@ function App() {
   return (
     <div className="relative w-full min-h-screen">
       {/* StarWars Fullscreen Background */}
-     {/* <div className="fixed inset-0 -z-10">
+      {/* 
+      <div className="fixed inset-0 -z-10">
         <StarWars 
           width={window.innerWidth} 
           height={window.innerHeight} 
           xwingModelPath="/models/xwing.glb" 
           tieFighterModelPath="/models/tiefighter.glb" 
         />
-      </div>  */}
+      </div>  
+      */}
 
       {/* Content on top */}
-      <div className="relative z-10" >
+      <div className="relative z-10">
         <Navbar />
-        {/* <div className="pt-15 max-w-[800px] mx-auto px-4 bg-gray-800/90 rounded-lg shadow-lg" id="about"> */}
-            <About />
-        <div className="pt-15 max-w-[800px] mx-auto px-4 rounded-lg shadow-lg" id="about">
 
-            {/* Center DonutHead */}
-            {/* <div className="flex justify-center items-center my-8">
-              <DonutHead />
-            </div> */}
+        {/* Centered About Section (Full Screen Hero) */}
+        <div className="flex items-center justify-center min-h-screen" id="about">
+          <About />
+        </div>
 
-            <Experience workData={dummyDataWork} educationData={dummyDataEducation} />
-            <Skills skillsData={dummySkills} />
+        {/* Rest of the content */}
+        <div className="pt-15 max-w-[800px] mx-auto px-4 rounded-lg shadow-lg">
+          {/* Center DonutHead */}
+          {/* <div className="flex justify-center items-center my-8">
+            <DonutHead />
+          </div> */}
 
-            {/* Projects Section */}
-            <div className="mt-10 text-center" id="projects">
-              <h2 className="text-2xl font-semibold mb-4">Projects</h2>
-              <div className="flex flex-wrap gap-6 justify-start">
-                {dummyProjects.map((project, index) => (
-                  <Project
-                    key={index}
-                    name={project.name}
-                    description={project.description}
-                    link={project.link}
-                    github={project.github}
-                    image={project.image}
-                    techstack={project.techstack}
-                  />
-                ))}
-              </div>
+          <Experience workData={dummyDataWork} educationData={dummyDataEducation} />
+          <Skills skillsData={dummySkills} />
+
+          {/* Projects Section */}
+          <div className="mt-10 text-center" id="projects">
+            <h2 className="text-2xl font-semibold mb-4">Projects</h2>
+            <div className="flex flex-wrap gap-6 justify-start">
+              {dummyProjects.map((project, index) => (
+                <Project
+                  key={index}
+                  name={project.name}
+                  description={project.description}
+                  link={project.link}
+                  github={project.github}
+                  image={project.image}
+                  techstack={project.techstack}
+                />
+              ))}
             </div>
           </div>
+        </div>
 
       </div>
     </div>
   );
 }
-
 
 export default App

@@ -10,15 +10,25 @@ export default function DonutHead() {
 
     // Scene setup
     const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xff0000); // bright red
     scene.background = new THREE.Color(0x14151a);
 
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      containerRef.current.clientWidth / containerRef.current.clientHeight,
-      0.1,
-      1000
-    );
-    camera.position.set(0, 1.75, 2.5);
+
+   const camera = new THREE.PerspectiveCamera(
+  70, // Field of View (FOV) in degrees – how wide the camera sees vertically
+  containerRef.current.clientWidth / containerRef.current.clientHeight, 
+      // Aspect ratio – width divided by height of the rendering area
+  0.1, // Near clipping plane – anything closer than 0.1 units won't be visible
+  1000 // Far clipping plane – anything farther than 1000 units won't be visible
+);
+
+// Set the camera's position in 3D space
+camera.position.set(
+  0,   // x-coordinate – left/right position (0 = center)
+  1.5,// y-coordinate – vertical position (1.75 units above origin)
+  2.0  // z-coordinate – depth position (2 units away from origin)
+);
+
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(
@@ -49,9 +59,10 @@ export default function DonutHead() {
     const loader = new GLTFLoader();
     loader.load("/models/head.glb", (gltf) => {
       headModel = gltf.scene;
-      headModel.scale.set(1, 1, 1);
+      headModel.scale.set(0.9, 0.9, 0.9);
       headModel.position.set(0, 0, 0);
     //   headModel.rotation.x = -Math.PI / 6;
+      // headModel.rotation.y = Math.PI;
       scene.add(headModel);
     });
 
@@ -73,16 +84,17 @@ export default function DonutHead() {
       animationId = requestAnimationFrame(animate);
 
       if (headModel) {
-        // Project mouse into 3D space in front of camera
-        raycaster.setFromCamera(mousePos, camera);
-        target.copy(raycaster.ray.origin).add(raycaster.ray.direction.multiplyScalar(5));
+        // Invert X so movement feels natural (left → left, right → right)
+        const rotationY = mousePos.x * Math.PI * 0.5; 
+        headModel.rotation.y = rotationY;
 
-        // Homer looks at this point
-        headModel.lookAt(target);
+        const rotationX = mousePos.y * Math.PI * 0.1;
+        headModel.rotation.x = -rotationX;
       }
 
       renderer.render(scene, camera);
     }
+
 
     animate();
 
@@ -110,5 +122,7 @@ export default function DonutHead() {
     };
   }, []);
 
-  return <div ref={containerRef} className="w-200 h-60 bg-[#14151A]" />;
+  return <div ref={containerRef} className="w-200 h-40 bg-blue-600" />;
+
+  // return <div ref={containerRef} className="w-200 h-50 bg-[#14151A]" />;
 }
