@@ -46,7 +46,10 @@ const Skills = ({ skillsData }) => {
   const [selectedData, setSelectedData] = useState(skillsData["Frontend"]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-4" id="skills">
+    <div
+      className="flex flex-col items-center justify-center min-h-screen px-4 text-white"
+      id="skills"
+    >
       {/* Top Buttons */}
       <div className="flex w-full max-w-3xl h-12 mb-6 gap-4">
         {["Frontend", "Backend", "Database/Cloud", "WorkFlow"].map((category) => (
@@ -56,11 +59,11 @@ const Skills = ({ skillsData }) => {
               setSelected(category);
               setSelectedData(skillsData[category]);
             }}
-            className={`cursor-pointer flex-1 text-white py-2 rounded-lg transition
+            className={`cursor-pointer flex-1 py-2 rounded-lg transition font-medium
               ${
                 selected === category
-                  ? "bg-gray-800"
-                  : "border border-transparent hover:bg-gray-700"
+                  ? "bg-gradient-to-b from-[#323440] to-[#1C1D23]"
+                  : "bg-[#1C1D23]/60 hover:bg-[#323440]/60"
               }`}
           >
             {category}
@@ -69,46 +72,48 @@ const Skills = ({ skillsData }) => {
       </div>
 
       {/* Skills section */}
-      <div className="relative w-full max-w-5xl h-[400px] rounded-lg py-8 px-4 overflow-y-auto overflow-x-hidden bg-gray-800/60">
-        <div 
+      <div className="relative w-full max-w-5xl h-[400px] rounded-2xl py-8 px-4 overflow-y-auto overflow-x-hidden 
+                      bg-gradient-to-b from-[#323440] to-[#1C1D23] shadow-lg backdrop-blur-sm">
+        <div
           className="grid gap-4 justify-center"
-          style={{ 
-            gridTemplateColumns: 'repeat(auto-fit, 6rem)',
-            justifyContent: 'center'
+          style={{
+            gridTemplateColumns: "repeat(auto-fit, 6rem)",
+            justifyContent: "center",
           }}
         >
-        {selectedData.map((skill, index) => {
-          const tech = TECH_ICON_MAP[skill.key];
-          if (!tech) return null;
-          const Icon = tech.icon;
+          {selectedData.map((skill, index) => {
+            const tech = TECH_ICON_MAP[skill.key];
+            if (!tech) return null;
+            const Icon = tech.icon;
 
-          return (
-            <div
-              key={index}
-              className="group relative flex flex-col items-center justify-center w-24 h-24 rounded-xl bg-gray-800/60 shadow-md hover:scale-105 transform transition-all duration-300 cursor-pointer flex-shrink-0"
-              style={{
-                color: tech.color,
-                boxShadow: "0 0 6px 0 transparent",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = `0 0 12px 2px ${tech.color}`;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = "0 0 6px 0 transparent";
-              }}
-            >
-              {/* Icon colored, text white by default */}
-              <Icon
-                size={40}
-                className="mb-1 transition-transform duration-300 group-hover:scale-110"
-                style={{ color: tech.color }}
-              />
-              <span className="text-xs font-medium text-center text-white">
-                {skill.name}
-              </span>
-            </div>
-          );
-        })}
+            return (
+              <div
+                key={index}
+                className="group relative flex flex-col items-center justify-center w-24 h-24 rounded-xl 
+                           bg-gradient-to-b from-[#2C2E38] to-[#1C1D23] shadow-md
+                           hover:scale-105 transform transition-all duration-300 cursor-pointer flex-shrink-0"
+                style={{
+                  color: tech.color,
+                  boxShadow: "0 0 6px 0 transparent",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = `0 0 14px 2px ${tech.color}`;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = "0 0 6px 0 transparent";
+                }}
+              >
+                <Icon
+                  size={40}
+                  className="mb-1 transition-transform duration-300 group-hover:scale-110"
+                  style={{ color: tech.color }}
+                />
+                <span className="text-xs font-medium text-center text-white">
+                  {skill.name}
+                </span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
