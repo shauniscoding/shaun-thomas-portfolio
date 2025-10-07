@@ -122,7 +122,7 @@ camera.position.set(
     };
   }, []);
 
-  return <div ref={containerRef} className="w-200 h-40 bg-blue-600" />;
+  return <div ref={containerRef} className="w-200 h-40" />;
 
   // return <div ref={containerRef} className="w-200 h-50 bg-[#14151A]" />;
 }

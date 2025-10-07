@@ -55,8 +55,8 @@ const TechIcon = ({ tech }) => {
 const Project = ({ name, description, link, github, techstack, image }) => {
   return (
     <div
-      className="relative bg-gradient-to-b from-[#14151A] to-[#1C1D23] text-white rounded-2xl shadow-lg overflow-hidden 
-                 max-w-[240px] h-[310px] border border-gray-600 transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl flex flex-col"
+      className="relative bg-gradient-to-b from-[#323440] to-[#1C1D23] text-white rounded-2xl shadow-lg overflow-hidden 
+                 max-w-[240px] h-[310px] transform transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl flex flex-col"
     >
       {/* Top: image area*/}
       <div className="px-4 pt-6">

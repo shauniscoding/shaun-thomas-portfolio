@@ -87,7 +87,7 @@ const dummyProjects = [
     "description": "A modern portfolio website showcasing my projects and skills. fvsdf vsdfv sdfvsd fvsdfv sdfvs dfvsdfvs dfvsdv sdfv",
     "link": "https://example.com",
     "github": "https://example.com",
-    "image": "/vite.svg",
+    "image": "/placholder.jpg",
     "techstack": ["React", "CSS", "JavaScript"]
   },
   {
@@ -95,7 +95,7 @@ const dummyProjects = [
     "description": "An online store with shopping cart and payment integration.",
     "link": "https://example.com",
     "github": "https://example.com",
-    "image": "/vite.svg",
+    "image": "/placholder.jpg",
     "techstack": ["React", "Node", "MongoDB"]
   },
   {
@@ -103,7 +103,7 @@ const dummyProjects = [
     "description": "A blogging platform with user authentication and rich-text editing.",
     "link": "https://example.com",
     "github": "https://example.com",
-    "image": "/vite.svg",
+    "image": "/placholder.jpg",
     "techstack": ["NextJS", "Tailwind", "GraphQL"]
   },
   {
@@ -111,7 +111,7 @@ const dummyProjects = [
     "description": "Real-time chat application with WebSocket support.",
     "link": "https://example.com",
     "github": "https://example.com",
-    "image": "/vite.svg",
+    "image": "/placholder.jpg",
     "techstack": ["React", "Node", "Socket.io"]
   }
 ]
