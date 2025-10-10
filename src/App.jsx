@@ -9,6 +9,10 @@ import DonutHead from './DonutHead'
 import './App.css'
 import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
+import { FourSquare } from "react-loading-indicators"
+
+//loading icon website for more interesting options later
+// https://react-loading-indicators.netlify.app/
 
 
 const dummyDataWork = [
@@ -157,11 +161,21 @@ function App() {
   }, []);
 
 
-    // Optional: handle loading state
   if (!educationData || !workData || !projectData) {
-    return <div>Loading data...</div>;
-  }
+    return (
+      <div className="fixed inset-0 flex items-center justify-center overflow-hidden">
+        {/* Optional: background color to hide body */}
+        <div className="relative z-10 flex flex-col items-center justify-center">
+          <Navbar />
 
+          {/* Loading icon in center */}
+          <div className="flex items-center justify-center min-h-[60vh]">
+            <FourSquare color="#17f573ff" size="large" text="" textColor="#48bb78" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-full min-h-screen">
