@@ -20,7 +20,9 @@ import {
   SiGraphql,
   SiRedux,
 } from "react-icons/si";
+import { FaLaptopCode } from "react-icons/fa6"; // ✅ Default fallback icon
 
+// Lowercase lookup map
 const TECH_ICON_MAP = {
   react: { icon: FaReact, color: "#61DAFB" },
   node: { icon: FaNodeJs, color: "#339933" },
@@ -42,36 +44,43 @@ const TECH_ICON_MAP = {
 };
 
 const Skills = ({ skillsData }) => {
-  const [selected, setSelected] = useState("Frontend");
-  const [selectedData, setSelectedData] = useState(skillsData["Frontend"]);
+  // Default to the first category
+  const [selected, setSelected] = useState(skillsData[0].id);
+  const [selectedData, setSelectedData] = useState(skillsData[0]);
+
+  // Normalize skills array (regardless of key name)
+  const getSkillsArray = (categoryObj) => {
+    const keys = Object.keys(categoryObj).filter((k) => k !== "id");
+    return categoryObj[keys[0]] || [];
+  };
 
   return (
     <div
       className="flex flex-col items-center justify-center min-h-screen px-4 text-white"
       id="skills"
     >
-      {/* Top Buttons */}
+      {/* Category Buttons */}
       <div className="flex w-full max-w-3xl h-12 mb-6 gap-4">
-        {["Frontend", "Backend", "Database/Cloud", "WorkFlow"].map((category) => (
+        {skillsData.map((category) => (
           <button
-            key={category}
+            key={category.id}
             onClick={() => {
-              setSelected(category);
-              setSelectedData(skillsData[category]);
+              setSelected(category.id);
+              setSelectedData(category);
             }}
             className={`cursor-pointer flex-1 py-2 rounded-lg transition font-medium
               ${
-                selected === category
+                selected === category.id
                   ? "bg-gradient-to-b from-[#323440] to-[#1C1D23]"
                   : "bg-[#1C1D23]/60 hover:bg-[#323440]/60"
               }`}
           >
-            {category}
+            {category.id.charAt(0).toUpperCase() + category.id.slice(1)}
           </button>
         ))}
       </div>
 
-      {/* Skills section */}
+      {/* Skills Section */}
       <div className="relative w-full max-w-5xl h-[400px] rounded-2xl py-8 px-4 overflow-y-auto overflow-x-hidden 
                       bg-gradient-to-b from-[#323440] to-[#1C1D23] shadow-lg backdrop-blur-sm">
         <div
@@ -81,9 +90,12 @@ const Skills = ({ skillsData }) => {
             justifyContent: "center",
           }}
         >
-          {selectedData.map((skill, index) => {
-            const tech = TECH_ICON_MAP[skill.key];
-            if (!tech) return null;
+          {getSkillsArray(selectedData).map((skill, index) => {
+            const key = skill.toLowerCase().replace(/\s|[().#+]/g, "");
+            const tech = TECH_ICON_MAP[key] || {
+              icon: FaLaptopCode, // ✅ fallback
+              color: "#9CA3AF",
+            };
             const Icon = tech.icon;
 
             return (
@@ -109,7 +121,7 @@ const Skills = ({ skillsData }) => {
                   style={{ color: tech.color }}
                 />
                 <span className="text-xs font-medium text-center text-white">
-                  {skill.name}
+                  {skill}
                 </span>
               </div>
             );
