@@ -10,6 +10,12 @@ import {
   FaPhp,
   FaDocker,
   FaGitAlt,
+  FaAws,
+  FaGithub,
+  FaGitlab,
+  FaBitbucket, 
+  FaLinux,
+  FaFigma      
 } from "react-icons/fa";
 import {
   SiTypescript,
@@ -19,28 +25,69 @@ import {
   SiTailwindcss,
   SiGraphql,
   SiRedux,
+  SiFlask,
+  SiFastapi,
+  SiSelenium,
+  SiMysql,
+  SiFirebase,
+  SiNetlify,
+  SiPostman,
+  SiJetbrains     
 } from "react-icons/si";
+import { VscAzure } from "react-icons/vsc";
+import { DiVisualstudio } from "react-icons/di";
+import { GrMysql } from "react-icons/gr";
+import { BiLogoVisualStudio } from "react-icons/bi";
 import { FaLaptopCode } from "react-icons/fa6"; // ✅ Default fallback icon
 
 // Lowercase lookup map
 const TECH_ICON_MAP = {
+  // --- Frameworks ---
   react: { icon: FaReact, color: "#61DAFB" },
   node: { icon: FaNodeJs, color: "#339933" },
+  tailwind: { icon: SiTailwindcss, color: "#38B2AC" },
+  flask: { icon: SiFlask, color: "#000000" },
+  fastapi: { icon: SiFastapi, color: "#009688" },
+  selenium: { icon: SiSelenium, color: "#43B02A" },
+
+  // --- Languages ---
   python: { icon: FaPython, color: "#FFD43B" },
-  html: { icon: FaHtml5, color: "#E34F26" },
-  css: { icon: FaCss3Alt, color: "#1572B6" },
-  javascript: { icon: FaJsSquare, color: "#F7DF1E" },
   java: { icon: FaJava, color: "#007396" },
   php: { icon: FaPhp, color: "#777BB4" },
+  javascript: { icon: FaJsSquare, color: "#F7DF1E" },
+  html: { icon: FaHtml5, color: "#E34F26" },
+  css: { icon: FaCss3Alt, color: "#1572B6" },
   typescript: { icon: SiTypescript, color: "#3178C6" },
-  nextjs: { icon: SiNextdotjs, color: "#000000" },
+
+  // --- Platforms / Databases ---
   mongodb: { icon: SiMongodb, color: "#47A248" },
   postgresql: { icon: SiPostgresql, color: "#336791" },
-  tailwind: { icon: SiTailwindcss, color: "#38B2AC" },
+  mysql: { icon: GrMysql, color: "#4479A1" },
+  firebase: { icon: SiFirebase, color: "#FFCA28" },
+  netlify: { icon: SiNetlify, color: "#00C7B7" },
+  docker: { icon: FaDocker, color: "#2496ED" },
+  aws: { icon: FaAws, color: "#FF9900" },
+  azure: { icon: VscAzure, color: "#0089D6" },
+
+  // --- Tools ---
+  postman: { icon: SiPostman, color: "#FF6C37" },
+  git: { icon: FaGitAlt, color: "#F1502F" },
+  github: { icon: FaGithub, color: "#ffffff" },
+  gitlab: { icon: FaGitlab, color: "#FC6D26" },
+  bitbucket: { icon: FaBitbucket, color: "#2684FF" },
+  linux: { icon: FaLinux, color: "#FCC624" },
+  figma: { icon: FaFigma, color: "#F24E1E" },
+  "visualstudio": { icon: DiVisualstudio, color: "#5C2D91" },
+  "vscode": { icon: BiLogoVisualStudio, color: "#007ACC" },
+  jetbrains: { icon: SiJetbrains, color: "#000000" },
+
+  // --- Misc / Extras ---
+  nextjs: { icon: SiNextdotjs, color: "#000000" },
   graphql: { icon: SiGraphql, color: "#E10098" },
   redux: { icon: SiRedux, color: "#764ABC" },
-  docker: { icon: FaDocker, color: "#2496ED" },
-  git: { icon: FaGitAlt, color: "#F1502F" },
+
+  // --- Default fallback ---
+  default: { icon: FaLaptopCode, color: "#A0AEC0" },
 };
 
 const Skills = ({ skillsData }) => {
