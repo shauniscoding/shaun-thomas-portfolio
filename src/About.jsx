@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import shaun from '../src/assets/shaun-placeholder.jpg';
+// import shaun from '../src/assets/shaun-placeholder.jpg';
+import shaun from '../src/assets/shaun.jpg';
 import DonutHead from "./DonutHead";
 import { FaLocationDot, FaLinkedin } from "react-icons/fa6";
 import { FaFileDownload, FaGithub } from "react-icons/fa";

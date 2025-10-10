@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Navbar from './Navbar'
 import About from './About'
 import Experience from './Experience'
@@ -7,6 +7,8 @@ import Project from './Project'
 import StarWars from './Starwars'
 import DonutHead from './DonutHead'
 import './App.css'
+import { db } from "../firebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
 
 
 const dummyDataWork = [
@@ -118,6 +120,49 @@ const dummyProjects = [
 
 
 function App() {
+  const [educationData, setEducationData] = useState(null)
+  const [workData, setWorkData] = useState(null)
+  const [projectData, setProjectData] = useState(null)
+  
+  
+  useEffect(() => {
+    async function getData() {
+      const educationRef = collection(db, "education");
+      const snapshotEducation = await getDocs(educationRef);
+      const education = snapshotEducation.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setEducationData(education)
+
+      const workRef = collection(db, "work");
+      const snapshotWork = await getDocs(workRef);
+      const work = snapshotWork.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setWorkData(work)
+
+      const projectRef = collection(db, "projects");
+      const snapshotProject = await getDocs(projectRef);
+      const project = snapshotProject.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setProjectData(project)
+    }
+
+    getData();
+ 
+  }, []);
+
+
+    // Optional: handle loading state
+  if (!educationData || !workData || !projectData) {
+    return <div>Loading data...</div>;
+  }
+
+
   return (
     <div className="relative w-full min-h-screen">
       {/* StarWars Fullscreen Background */}
@@ -143,19 +188,17 @@ function App() {
 
         {/* Rest of the content */}
         <div className="pt-15 max-w-[800px] mx-auto px-4 rounded-lg shadow-lg">
-          {/* Center DonutHead */}
-          {/* <div className="flex justify-center items-center my-8">
-            <DonutHead />
-          </div> */}
 
-          <Experience workData={dummyDataWork} educationData={dummyDataEducation} />
+          <Experience workData={workData} educationData={educationData} />
+                    
+          {/* Update this component to at first have all skills, then when clicking on buttons, highlgigths what is selected and unseletecete */}
           <Skills skillsData={dummySkills} />
 
           {/* Projects Section */}
           <div className="mt-10 text-center" id="projects">
             <h2 className="text-2xl font-semibold mb-4">Projects</h2>
             <div className="flex flex-wrap gap-6 justify-start">
-              {dummyProjects.map((project, index) => (
+              {projectData.map((project, index) => (
                 <Project
                   key={index}
                   name={project.name}
