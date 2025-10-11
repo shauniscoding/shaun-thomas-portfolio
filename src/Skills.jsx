@@ -91,14 +91,47 @@ const TECH_ICON_MAP = {
 };
 
 const Skills = ({ skillsData }) => {
-  // Default to the first category
-  const [selected, setSelected] = useState(skillsData[0].id);
-  const [selectedData, setSelectedData] = useState(skillsData[0]);
+  // Track which categories are selected (empty array = show all)
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
   // Normalize skills array (regardless of key name)
   const getSkillsArray = (categoryObj) => {
     const keys = Object.keys(categoryObj).filter((k) => k !== "id");
     return categoryObj[keys[0]] || [];
+  };
+
+  // Toggle category selection
+  const toggleCategory = (categoryId) => {
+    setSelectedCategories((prev) => {
+      const isSelected = prev.includes(categoryId);
+      
+      if (isSelected) {
+        // Don't allow deselecting if it's the only one selected
+        if (prev.length === 1) {
+          return prev;
+        }
+        return prev.filter((id) => id !== categoryId);
+      } else {
+        return [...prev, categoryId];
+      }
+    });
+  };
+
+  // Get all skills to display based on selection
+  const getDisplayedSkills = () => {
+    // If no categories selected, show all
+    if (selectedCategories.length === 0) {
+      return skillsData.flatMap((category) => 
+        getSkillsArray(category).map(skill => ({ skill, categoryId: category.id }))
+      );
+    }
+    
+    // Otherwise show only selected categories
+    return skillsData
+      .filter((category) => selectedCategories.includes(category.id))
+      .flatMap((category) => 
+        getSkillsArray(category).map(skill => ({ skill, categoryId: category.id }))
+      );
   };
 
   return (
@@ -108,23 +141,29 @@ const Skills = ({ skillsData }) => {
     >
       {/* Category Buttons */}
       <div className="flex w-full max-w-3xl h-12 mb-6 gap-4">
-        {skillsData.map((category) => (
-          <button
-            key={category.id}
-            onClick={() => {
-              setSelected(category.id);
-              setSelectedData(category);
-            }}
-            className={`cursor-pointer flex-1 py-2 rounded-lg transition font-medium
-              ${
-                selected === category.id
-                  ? "bg-gradient-to-b from-[#323440] to-[#1C1D23]"
-                  : "bg-[#1C1D23]/60 hover:bg-[#323440]/60"
-              }`}
-          >
-            {category.id.charAt(0).toUpperCase() + category.id.slice(1)}
-          </button>
-        ))}
+        {skillsData.map((category) => {
+          const isSelected = selectedCategories.includes(category.id);
+          const isOnlySelected = selectedCategories.length === 1 && isSelected;
+          
+          return (
+            <button
+              key={category.id}
+              onClick={() => toggleCategory(category.id)}
+              disabled={isOnlySelected}
+              className={`cursor-pointer flex-1 py-2 rounded-lg transition font-medium
+                ${
+                  isSelected
+                    ? "bg-gradient-to-b from-[#323440] to-[#1C1D23]"
+                    : selectedCategories.length === 0
+                    ? "bg-gradient-to-b from-[#323440] to-[#1C1D23] opacity-70"
+                    : "bg-[#1C1D23]/60 hover:bg-[#323440]/60"
+                }
+                ${isOnlySelected ? "cursor-not-allowed opacity-50" : ""}`}
+            >
+              {category.id.charAt(0).toUpperCase() + category.id.slice(1)}
+            </button>
+          );
+        })}
       </div>
 
       {/* Skills Section */}
@@ -137,7 +176,7 @@ const Skills = ({ skillsData }) => {
             justifyContent: "center",
           }}
         >
-          {getSkillsArray(selectedData).map((skill, index) => {
+          {getDisplayedSkills().map(({ skill, categoryId }, index) => {
             const key = skill.toLowerCase().replace(/\s|[().#+]/g, "");
             const tech = TECH_ICON_MAP[key] || {
               icon: FaLaptopCode, // ✅ fallback
@@ -147,7 +186,7 @@ const Skills = ({ skillsData }) => {
 
             return (
               <div
-                key={index}
+                key={`${categoryId}-${skill}-${index}`}
                 className="group relative flex flex-col items-center justify-center w-24 h-24 rounded-xl 
                            bg-gradient-to-b from-[#2C2E38] to-[#1C1D23] shadow-md
                            hover:scale-105 transform transition-all duration-300 cursor-pointer flex-shrink-0"
