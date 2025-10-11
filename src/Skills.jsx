@@ -48,7 +48,7 @@ const TECH_ICON_MAP = {
   tailwind: { icon: SiTailwindcss, color: "#38B2AC" },
   flask: { icon: SiFlask, color: "#000000" },
   fastapi: { icon: SiFastapi, color: "#009688" },
-  selenium: { icon: SiSelenium, color: "#43B02A" },
+  selenium: { icon: SiSelenium, color: "#9ca79aff" },
 
   // --- Languages ---
   python: { icon: FaPython, color: "#FFD43B" },
@@ -63,7 +63,7 @@ const TECH_ICON_MAP = {
   mongodb: { icon: SiMongodb, color: "#47A248" },
   postgresql: { icon: SiPostgresql, color: "#336791" },
   mysql: { icon: GrMysql, color: "#4479A1" },
-  firebase: { icon: SiFirebase, color: "#FFCA28" },
+  firebase: { icon: SiFirebase, color: "#ee4a0eff" },
   netlify: { icon: SiNetlify, color: "#00C7B7" },
   docker: { icon: FaDocker, color: "#2496ED" },
   aws: { icon: FaAws, color: "#FF9900" },
@@ -75,8 +75,8 @@ const TECH_ICON_MAP = {
   github: { icon: FaGithub, color: "#ffffff" },
   gitlab: { icon: FaGitlab, color: "#FC6D26" },
   bitbucket: { icon: FaBitbucket, color: "#2684FF" },
-  linux: { icon: FaLinux, color: "#FCC624" },
-  figma: { icon: FaFigma, color: "#F24E1E" },
+  linux: { icon: FaLinux, color: "#000000" },
+  figma: { icon: FaFigma, color: "#f21e93ff" },
   "visualstudio": { icon: DiVisualstudio, color: "#5C2D91" },
   "vscode": { icon: BiLogoVisualStudio, color: "#007ACC" },
   jetbrains: { icon: SiJetbrains, color: "#000000" },
