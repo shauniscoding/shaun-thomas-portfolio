@@ -34,21 +34,28 @@ const About = () => {
   const formattedName = shaun_name.replace("ShaunThomas", "Shaun Thomas");
 
   return (
-    <div className="flex flex-col justify-center w-full px-4">
+    <div className="flex flex-col justify-center w-full px-4 mt-20 sm:mt-6 md:mt-10 lg:mt-0">
       {/* Top Section */}
       <div className="flex flex-col md:flex-row items-center md:items-end gap-10 justify-center text-center md:text-left">
-        {/* Left: Image + Location */}
+      {/* Left: Image + Location */}
+      <div className="flex flex-col items-center md:items-start">
         <div className="flex flex-col items-center md:items-start">
-          <img
-            src={shaun}
-            alt="Shaun Thomas"
-            className="w-28 h-28 rounded-full object-cover"
-          />
-          <div className="relative flex items-center mt-2 justify-center md:justify-start">
-            <FaLocationDot className="absolute -left-5 md:static md:mr-2 text-yellow-200 text-sm" />
-            <span className="text-yellow-200 text-lg">Placeholder, CA</span>
+          {/* Wrapper so we can control layout better */}
+          <div className="flex flex-col items-center md:items-center">
+            <img
+              src={shaun}
+              alt="Shaun Thomas"
+              className="w-28 h-28 rounded-full object-cover"
+            />
+            {/* Location section: image centered above this text/icon */}
+            <div className="flex items-center justify-center md:justify-start mt-2">
+              <FaLocationDot className="text-yellow-200 text-sm mr-2" />
+              <span className="text-yellow-200 text-lg">Sacramento, CA</span>
+            </div>
           </div>
         </div>
+      </div>
+
 
         {/* Right: Greeting */}
         <div className="flex flex-col justify-end">

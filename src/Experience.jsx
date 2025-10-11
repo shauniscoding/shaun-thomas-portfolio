@@ -1,8 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 
 const Experience = ({ workData, educationData }) => {
   const [selected, setSelected] = useState("work");
   const [selectedData, setSelectedData] = useState(workData);
+
+  // Function to sort data based on "Present" and descending date order
+  const sortedData = useMemo(() => {
+    const parseDate = (dateStr) => {
+      if (!dateStr) return new Date(0);
+      if (dateStr.toLowerCase().includes("present")) return new Date(9999, 0, 1);
+      return new Date(dateStr);
+    };
+
+    return [...selectedData].sort((a, b) => {
+      const dateA = parseDate(a.endDate);
+      const dateB = parseDate(b.endDate);
+      return dateB - dateA; // Descending (newest first)
+    });
+  }, [selectedData]);
 
   return (
     <div
@@ -48,7 +63,7 @@ const Experience = ({ workData, educationData }) => {
                    bg-gradient-to-b from-[#323440] to-[#1C1D23]
                    shadow-lg backdrop-blur-sm"
       >
-        {selectedData.map((experience, index) => (
+        {sortedData.map((experience, index) => (
           <div
             key={index}
             className="group flex flex-col sm:flex-row p-4 w-full rounded-xl 
